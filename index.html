@@ -648,7 +648,7 @@ panel("cmp-van",false);panel("cmp-omni",true);
     [g.g,g.hull].forEach(e=>{e.addEventListener("mouseenter",()=>hl(true));e.addEventListener("mouseleave",()=>hl(false));});
   });
   const all=G.flatMap(g=>g.dots),show=()=>G.forEach((g,i)=>setTimeout(()=>{g.hull.setAttribute("opacity",1);g.lab.setAttribute("opacity",1);},reduce?0:i*50));
-  const place=t=>all.forEach(o=>{const e=ease(Math.max(0,Math.min(1,(t-o.d)/.7)));o.c.setAttribute("cx",(o.sx+(o.x-o.sx)*e).toFixed(1));o.c.setAttribute("cy",(o.sy+(o.y-o.sy)*e).toFixed(1));});
+  const place=t=>all.forEach(o=>{const e=ease(Math.max(0,Math.min(1,(t-o.d)/.7)));o.c.setAttriute("cx",(o.sx+(o.x-o.sx)*e).toFixed(1));o.c.setAttribute("cy",(o.sy+(o.y-o.sy)*e).toFixed(1));});
   if(!reduce)place(0);
   onVisible(svg,()=>{if(reduce){show();return;}const s0=performance.now();(function f(n){const t=Math.min(1,(n-s0)/1800);place(t);if(t<1)requestAnimationFrame(f);else show();})(s0);});
 })();
