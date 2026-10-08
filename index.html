@@ -44,7 +44,7 @@ nav,button,table,figcaption,.btn,.cap,summary{font-family:"Lato",system-ui,-appl
 a{color:var(--accent)}
 .col{max-width:880px;margin:0 auto;padding:0 20px}
 svg{max-width:100%}
- 
+
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
 nav .col{display:flex;justify-content:center;gap:24px;height:48px;align-items:center;font-size:14px;overflow-x:auto}
 nav a{color:var(--muted);text-decoration:none;white-space:nowrap}
@@ -197,7 +197,7 @@ footer{margin:80px 0 0;padding:24px 0 44px;border-top:1px solid var(--rule);text
   </p>
   <p class="affil"><sup>1</sup>Université Paris-Saclay, CentraleSupélec, Gustave Roussy, INSERM, IHU PRISM, Cancer Data Science Unit, France<br>
   <sup>2</sup>Université Paris-Saclay, CentraleSupélec, MICS Laboratory, France<br>
-  <sup>3</sup>Stony Brook University, USA<br>
+  <sup>3</sup>Department of Computer Science, Stony Brook University, USA<br>
   *Equal contribution</p>
   <p class="venue">NeurIPS 2026, Main Track</p>
   <div class="btns">
@@ -344,17 +344,17 @@ footer{margin:80px 0 0;padding:24px 0 44px;border-top:1px solid var(--rule);text
   <h3>Ablation studies</h3>
   <div class="tw">
     <table>
-      <thead><tr><th>Variant of OMNI-B</th><th>InfoNCE</th><th>MoE tail</th><th>Attention mask</th><th>Mean F1 (%)</th></tr></thead>
+      <thead><tr><th>Variant of OMNI-B</th><th>InfoNCE</th><th>MoE tail</th><th>Attention mask</th><th>Tile F1 (%)</th><th>Slide BAcc (%)</th><th>Average</th></tr></thead>
       <tbody>
-        <tr class="ours"><td>OMNI-B (full)</td><td>✓</td><td>✓</td><td>✓</td><td><b>87.1</b></td></tr>
-        <tr><td>No InfoNCE loss</td><td>✗</td><td>✓</td><td>✓</td><td>86.6<span class="d r">−0.5</span></td></tr>
-        <tr><td>No MoE tail</td><td>✓</td><td>✗</td><td>✓</td><td>86.6<span class="d r">−0.5</span></td></tr>
-        <tr><td>No attention mask</td><td>✓</td><td>✓</td><td>✗</td><td>86.2<span class="d r">−0.9</span></td></tr>
-        <tr><td>Vanilla MTD</td><td>✗</td><td>✗</td><td>✗</td><td>85.4<span class="d r">−1.7</span></td></tr>
+        <tr class="ours"><td>OMNI-B (full)</td><td>✓</td><td>✓</td><td>✓</td><td><b>87.1</b></td><td><b>63.2</b></td><td><b>75.2</b></td></tr>
+        <tr><td>No InfoNCE loss</td><td>✗</td><td>✓</td><td>✓</td><td>86.6<span class="d r">−0.5</span></td><td>61.1<span class="d r">−2.1</span></td><td>73.9<span class="d r">−1.3</span></td></tr>
+        <tr><td>No MoE tail</td><td>✓</td><td>✗</td><td>✓</td><td>86.6<span class="d r">−0.5</span></td><td>61.2<span class="d r">−2.0</span></td><td>73.9<span class="d r">−1.3</span></td></tr>
+        <tr><td>No attention mask</td><td>✓</td><td>✓</td><td>✗</td><td>86.2<span class="d r">−0.9</span></td><td>61.6<span class="d r">−1.6</span></td><td>73.9<span class="d r">−1.3</span></td></tr>
+        <tr><td>Vanilla MTD</td><td>✗</td><td>✗</td><td>✗</td><td>85.4<span class="d r">−1.7</span></td><td>61.8<span class="d r">−1.4</span></td><td>73.6<span class="d r">−1.6</span></td></tr>
       </tbody>
     </table>
   </div>
-  <p class="cap"><b>Ablation study</b> on the contribution of the structured attention, InfoNCE loss and MoE blocks (mean F1 on THUNDER linear probing, ViT-Base). When removing each contribution, performance drops, showing that all of them are necessary.</p>
+  <p class="cap"><b>Ablation study</b> on the contribution of the structured attention, InfoNCE loss and MoE blocks (linear probing, ViT-Base). A ✗ indicates that the corresponding component is removed from the full OMNI-B model. When removing each contribution, performance drops, showing that all of them are necessary.</p>
 
   <div class="two">
     <div>
@@ -378,7 +378,7 @@ footer{margin:80px 0 0;padding:24px 0 44px;border-top:1px solid var(--rule);text
           </tbody>
         </table>
       </div>
-      <p class="cap"><b>Adversarial robustness</b> (mean F1 drop under PGD) and <b>calibration</b> (mean ECE), averaged across 13 datasets.</p>
+      <p class="cap"><b>Adversarial robustness</b> (mean F1 drop under PGD, ε = 1.5×10<sup>−3</sup>) and <b>calibration</b> (mean ECE), averaged across 13 datasets. OMNI-L is both the most robust and the best calibrated model.</p>
     </div>
     <div>
       <h3>Combination with a stronger aggregator</h3>
@@ -436,7 +436,7 @@ footer{margin:80px 0 0;padding:24px 0 44px;border-top:1px solid var(--rule);text
       </tbody>
     </table>
   </div>
-  <p class="cap" style="margin-bottom:22px"><b>Pre-training dataset:</b> 10M tiles extracted from 10K whole-slide images sourced from TCGA. Teacher embeddings are pre-computed and stored offline. <a href="https://huggingface.co/collections/sofieneb/pathology-foundation-model-features">Dataset</a> and <a href="https://github.com/prism-oncology/OMNI">training code</a>.</p>
+  <p class="cap" style="margin-bottom:22px"><b>Pre-training dataset:</b> 10M tiles extracted from 10K whole-slide images sourced from TCGA. Teacher embeddings are pre-computed and stored offline. <a href="https://huggingface.co/collections/sofieneb/pathology-foundation-model-features">Dataset</a> and <a href="https://github.com/prism-oncology/omni">training code</a>.</p>
   <p>The pretrained weights can be loaded directly from the Hugging Face Hub:</p>
 <pre class="code">from transformers import AutoModel
 
